@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lojas PromoDay - Selecionados</title>
+</head>
+<body>
+
+    <header style="display: flex; align-items: center; justify-content: center; gap: 20px; padding: 15px 0; border-bottom: 2px solid black;">
+        <img src="../IMAGEM/mercadolivre.jpg" alt="mercado livre" style="width: 60px; border-radius: 12px;">
+        <h1 style="margin: 0;">Lojas PromoDay</h1>
+    </header>
+
+    <nav style="display: flex; justify-content: center; gap: 40px; padding: 15px 0; background-color: #969292; border-bottom: 1px solid #ccc;">
+        <a href="index.html" style="text-decoration: none; color: black; font-weight: bold;">Início</a>
+        <a href="pagina1.html" style="text-decoration: none; color: black; font-weight: bold;">Grupo</a>
+        <a href="pagina2.html" style="text-decoration: none; color: black; font-weight: bold;">Perfil no site</a>
+        <a href="carrinho.html" style="text-decoration: none; color: black; font-weight: bold;">Selecionados</a>
+    </nav>
+
+    <p style="text-align: center; font-size: 24px; font-weight: bold; margin-top: 30px;">🔥 Selecionados da Semana</p>
+    <p style="text-align: center; font-size: 18px; color: #555; max-width: 600px; margin: 8px auto 0; padding: 0 20px;">Os 10 itens mais comprados pelos nossos clientes, atualizados toda semana.</p>
+    <i style="text-align: center; font-size: 15px; color: #555; display: block; margin-top: 10px;">Quer garantir o seu? Fale com a gente: <b>(83) 9 9698-6476</b></i>
+
+    <div style="text-align: center; margin-top: 25px;">
+        <label for="ordenar" style="font-weight: bold; margin-right: 8px; font-size: 15px;">Ordenar por:</label>
+        <select id="ordenar" onchange="ordenarItens()" style="padding: 8px 16px; font-size: 15px; font-weight: bold; border-radius: 8px; border: 2px solid #1fa855; background-color: #ffffff; color: #1a1a1a;">
+            <option value="vendidos-dia">🔥 Mais comprados hoje</option>
+            <option value="vendidos-semana" selected>🔥 Mais comprados na semana</option>
+            <option value="vendidos-mes">🔥 Mais comprados no mês</option>
+            <option value="preco-menor">💲 Menor preço</option>
+            <option value="preco-maior">💲 Maior preço</option>
+            <option value="alfabetica">🔤 Ordem alfabética (A-Z)</option>
+        </select>
+    </div>
+
+    <div style="text-align: center; margin-top: 30px;">
+        <img src="../IMAGEM/promosdayimg.jpg" alt="Logo de Promoções" style="width: 550px; max-width: 90%; border-radius: 15px; box-shadow: 0 6px 20px rgba(0,0,0,0.4);">
+    </div>
+
+    <div id="grade-itens" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin: 40px 20px 60px;"></div>
+
+    <footer style="text-align: center; margin-top: 60px; padding: 15px; font-size: 14px; color: #888; border-top: 1px solid #ddd;">
+        © 2026 Lojas PromoDay — Todos os direitos reservados
+    </footer>
+
+    <script>
+        const produtos = [
+            { nome: "Fone Bluetooth PromoDay Sound X", preco: 89.90, img: "../IMAGEM/foneb.jpg", link: "produto-fone.html", dia: 18, semana: 310, mes: 1180 },
+            { nome: "Mouse Attack Shark R6", preco: 45.00, img: "../IMAGEM/mouse.jpg", link: "produto-mouse.html", dia: 22, semana: 275, mes: 990 },
+            { nome: "Teclado Mecânico Attack Shark K85", preco: 129.90, img: "../IMAGEM/teclado.jpg", link: "produto-teclado.html", dia: 14, semana: 240, mes: 860 },
+            { nome: "Carregador Turbo 20W", preco: 39.90, img: "../IMAGEM/carregador.jpg", link: "#", dia: 31, semana: 210, mes: 790 },
+            { nome: "Power Bank 10000mAh", preco: 69.90, img: "../IMAGEM/powerbank.jpg", link: "#", dia: 26, semana: 195, mes: 700 },
+            { nome: "Caixa de Som JBL profissional", preco: 99.90, img: "../IMAGEM/caixadesom.jpg", link: "#", dia: 12, semana: 168, mes: 640 },
+            { nome: "Smartwatch Sport PromosDay", preco: 159.90, img: "../IMAGEM/smartwatch.jpg", link: "#", dia: 9, semana: 140, mes: 520 },
+            { nome: "Suporte Veicular para Celular", preco: 29.90, img: "../IMAGEM/suportecelular.jpg", link: "#", dia: 20, semana: 120, mes: 470 },
+            { nome: "Cabo USB-C Reforçado 2m", preco: 24.90, img: "../IMAGEM/caboUSB.jpg", link: "#", dia: 27, semana: 98, mes: 410 },
+            { nome: "Luminária LED USB", preco: 34.90, img: "../IMAGEM/luminaria.jpg", link: "#", dia: 7, semana: 76, mes: 350 }
+        ];
+
+        function ordenarItens() {
+            const criterio = document.getElementById('ordenar').value;
+            let lista = produtos.slice();
+
+            if (criterio === 'vendidos-dia') lista.sort((a, b) => b.dia - a.dia);
+            else if (criterio === 'vendidos-semana') lista.sort((a, b) => b.semana - a.semana);
+            else if (criterio === 'vendidos-mes') lista.sort((a, b) => b.mes - a.mes);
+            else if (criterio === 'preco-menor') lista.sort((a, b) => a.preco - b.preco);
+            else if (criterio === 'preco-maior') lista.sort((a, b) => b.preco - a.preco);
+            else if (criterio === 'alfabetica') lista.sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
+
+            renderizarGrade(lista, criterio);
+        }
+
+        function renderizarGrade(lista, criterio) {
+            const grade = document.getElementById('grade-itens');
+            grade.innerHTML = '';
+
+            lista.forEach(function (produto, index) {
+                let infoExtra = 'chegará grátis amanhã';
+                if (criterio === 'vendidos-dia') infoExtra = produto.dia + ' vendidos hoje';
+                else if (criterio === 'vendidos-semana') infoExtra = produto.semana + ' vendidos na semana';
+                else if (criterio === 'vendidos-mes') infoExtra = produto.mes + ' vendidos no mês';
+
+                let corBadge = '#ff4d4d';
+                let corTexto = '#ffffff';
+                if (index === 0) { corBadge = '#ffd11a'; corTexto = '#1a1a1a'; }
+                else if (index === 1) { corBadge = '#c0c0c0'; corTexto = '#1a1a1a'; }
+                else if (index === 2) { corBadge = '#cd7f32'; corTexto = '#ffffff'; }
+
+                const precoTexto = produto.preco.toFixed(2).replace('.', ',');
+
+                const card = document.createElement('div');
+                card.style.cssText = 'position: relative; background: linear-gradient(to bottom, #ffffff, #e8e8e8); border: 1px solid #ccc; border-bottom: 4px solid #a8a8a8; padding: 10px; width: 150px; text-align: center; border-radius: 8px; box-shadow: 0 6px 14px rgba(0,0,0,0.35);';
+
+                card.innerHTML = `
+                    <span style="position: absolute; top: -10px; left: -10px; background: ${corBadge}; color: ${corTexto}; font-size: 12px; font-weight: bold; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">#${index + 1}</span>
+                    <img src="${produto.img}" alt="${produto.nome}" style="width: 100%; height: 110px; object-fit: cover; border-radius: 4px;">
+                    <a href="${produto.link}" style="display: block; margin-top: 6px; text-decoration: none; color: black; font-weight: bold; font-size: 13px; min-height: 32px;">${produto.nome}</a>
+                    <p style="margin: 4px 0; font-size: 16px; font-weight: bold;">R$ ${precoTexto}</p>
+                    <p style="margin: 4px 0; color: green; font-size: 12px;">${infoExtra}</p>
+                `;
+
+                grade.appendChild(card);
+            });
+        }
+
+        ordenarItens();
+    </script>
+
+</body>
+</html>
